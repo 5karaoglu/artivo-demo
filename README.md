@@ -18,8 +18,22 @@ Replace `<agent_id>` with your actual Elevenlabs Agent ID.
 This application supports the following environment variables:
 
 ### Required:
-- `ELEVENLABS_AGENT_ID`: Your Elevenlabs Agent ID
 - `ELEVENLABS_API_KEY`: Your Elevenlabs API Key (for private agents)
+- `ELEVENLABS_AGENT_ID_DEFAULT` or `ELEVENLABS_AGENT_ID`: Default Elevenlabs Agent ID (fallback)
+
+### Dynamic Phone-to-Agent Mapping:
+You can configure different agents for different phone numbers using this pattern:
+- `PHONE_<normalized_phone>_AGENT_ID`: Agent ID for specific phone number
+
+**Examples:**
+- `PHONE_908503351053_AGENT_ID=agent_customer_service` - Customer service agent
+- `PHONE_905551234567_AGENT_ID=agent_sales` - Sales agent  
+- `PHONE_902125551234_AGENT_ID=agent_technical` - Technical support agent
+
+**Phone Number Normalization:**
+- `+90 850 335 10 53` → `908503351053`
+- `0850 335 10 53` → `908503351053`
+- `850 335 10 53` → `908503351053`
 
 ### Optional:
 - `WS_PORT`: WebSocket server port (default: 3000)
@@ -29,8 +43,10 @@ This application supports the following environment variables:
 
 ### Example with all variables:
 ```bash
-ELEVENLABS_AGENT_ID=your_agent_id \
+ELEVENLABS_AGENT_ID_DEFAULT=your_default_agent_id \
 ELEVENLABS_API_KEY=your_api_key \
+PHONE_908503351053_AGENT_ID=customer_service_agent \
+PHONE_905551234567_AGENT_ID=sales_agent \
 MAIVO_API_URL=https://api.maivo.com.tr/api/temsilci/kayit \
 MAIVO_API_KEY=your_maivo_api_key \
 WS_PORT=3000 \
@@ -43,8 +59,13 @@ You can also create a `.env` file in the project root with the following content
 
 ```env
 # ElevenLabs Configuration
-ELEVENLABS_AGENT_ID=your_elevenlabs_agent_id_here
+ELEVENLABS_AGENT_ID_DEFAULT=your_default_agent_id_here
 ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
+
+# Dynamic Phone-to-Agent Mapping
+PHONE_908503351053_AGENT_ID=customer_service_agent_id
+PHONE_905551234567_AGENT_ID=sales_agent_id
+PHONE_902125551234_AGENT_ID=technical_support_agent_id
 
 # Server Configuration
 WS_PORT=3000
@@ -65,8 +86,32 @@ Then simply run:
 npm start
 ```
 
+### Testing Agent Routing:
+You can test the agent routing functionality:
+```bash
+npm run test-routing
+```
+
+This will show current agent configurations and test routing for sample phone numbers.
+
 ## Prerequisites
 This application requires a Jambonz server running release `0.9.2-rc3` or above.
+
+## Dynamic Agent Routing
+
+The application now supports dynamic agent routing based on the called phone number. When a call comes in:
+
+1. **Phone Number Normalization**: The called number is normalized to Turkish format (e.g., `908503351053`)
+2. **Agent Lookup**: System searches for `PHONE_<normalized_number>_AGENT_ID` environment variable
+3. **Fallback**: If no specific agent found, uses `ELEVENLABS_AGENT_ID_DEFAULT` or `ELEVENLABS_AGENT_ID`
+
+### Routing Examples:
+- Call to `+90 850 335 10 53` → Uses `PHONE_908503351053_AGENT_ID` agent
+- Call to `0555 123 45 67` → Uses `PHONE_905551234567_AGENT_ID` agent  
+- Call to unknown number → Uses default agent
+
+### Debugging:
+The application logs all agent configurations at startup and provides detailed routing information for each call.
 
 ## Configuring the Assistant
 Elevenlabs requires the assistant to be configured before connecting to the agent. This application uses the `llm` verb with `llmOptions` to send the initial configuration to Elevenlabs. For details, refer to the Elevenlabs documentation: [Elevenlabs Agent Setup](https://elevenlabs.io/docs/conversational-ai/docs/agent-setup).

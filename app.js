@@ -24,6 +24,11 @@ app.post('/dial-status', (req, res) => {
 
 require('./lib/routes')({logger, makeService});
 
+// Startup'ta agent konfigürasyonlarını göster
+const { agentRouter } = require('./lib/utils');
+logger.info('🚀 Starting Artivo Demo with Dynamic Agent Routing');
+agentRouter.listAgentConfigurations(logger);
+
 server.listen(port, () => {
   logger.info(`jambonz websocket server listening at http://localhost:${port}`);
 });
