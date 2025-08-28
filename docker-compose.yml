@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: elevenlabs_s2s_app
+    ports:
+      - "${WS_PORT_HOST:-3000}:${WS_PORT_CONTAINER:-3000}"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - WS_PORT=${WS_PORT_CONTAINER:-3000}
+      - ELEVENLABS_AGENT_ID=${ELEVENLABS_AGENT_ID}
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+      - MAIVO_API_URL=${MAIVO_API_URL:-https://api.maivo.com.tr/api/temsilci/kayit}
+      - MAIVO_API_KEY=${MAIVO_API_KEY:-artivo_secure_api_key_2024_v1}
+      - LOGLEVEL=${LOGLEVEL:-info}
+    env_file:
+      - .env
+    command: npm start
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: elevenlabs_s2s_ngrok
+    restart: unless-stopped
+    ports:
+      - "4040:4040"
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    command: http app:${WS_PORT_CONTAINER:-3000} --log=stdout
+    depends_on:
+      - app 

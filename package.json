@@ -1,0 +1,23 @@
+{
+  "name": "artivo-demo",
+  "version": "0.0.1",
+  "description": "Artivo demo application using Elevenlabs's Realtime API with Jambonz integration",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "jslint": "eslint app.js lib --fix"
+  },
+  "author": "Hoan HL",
+  "license": "MIT",
+  "dependencies": {
+    "@jambonz/node-client-ws": "^0.1.71",
+    "axios": "^1.7.9",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "pino": "^9.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.12.0",
+    "eslint-plugin-promise": "^7.1.0"
+  }
+}
