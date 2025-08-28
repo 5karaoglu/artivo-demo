@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app",
     "jslint": "eslint app.js lib --fix",
-    "test-routing": "node -e \"require('dotenv').config(); const {agentRouter} = require('./lib/utils'); const logger = {info: console.log, warn: console.warn, error: console.error}; console.log('🧪 Agent Routing Test'); agentRouter.listAgentConfigurations(logger); console.log('Examples:'); ['908503351053', '905551234567'].forEach(phone => { const agent = agentRouter.selectAgentForCall(phone, logger); console.log(phone + ' -> ' + (agent || 'DEFAULT')); });\""
+    "test-routing": "node -e \"require('dotenv').config(); const {agentRouter} = require('./lib/utils'); const logger = {info: console.log, warn: console.warn, error: console.error}; console.log('🧪 Agent Routing Test'); agentRouter.listAgentConfigurations(logger); console.log('Examples:'); ['908502426449', '905551234567'].forEach(phone => { const agent = agentRouter.selectAgentForCall(phone, logger); console.log(phone + ' -> ' + (agent || 'DEFAULT')); });\""
   },
   "author": "Hoan HL",
   "license": "MIT",

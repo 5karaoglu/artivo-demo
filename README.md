@@ -26,14 +26,14 @@ You can configure different agents for different phone numbers using this patter
 - `PHONE_<normalized_phone>_AGENT_ID`: Agent ID for specific phone number
 
 **Examples:**
-- `PHONE_908503351053_AGENT_ID=agent_customer_service` - Customer service agent
+- `PHONE_908502426449_AGENT_ID=agent_customer_service` - Customer service agent
 - `PHONE_905551234567_AGENT_ID=agent_sales` - Sales agent  
 - `PHONE_902125551234_AGENT_ID=agent_technical` - Technical support agent
 
 **Phone Number Normalization:**
-- `+90 850 335 10 53` → `908503351053`
-- `0850 335 10 53` → `908503351053`
-- `850 335 10 53` → `908503351053`
+- `+90 850 242 64 49` → `908502426449`
+- `0850 242 64 49` → `908502426449`
+- `850 242 64 49` → `908502426449`
 
 ### Optional:
 - `WS_PORT`: WebSocket server port (default: 3000)
@@ -45,7 +45,7 @@ You can configure different agents for different phone numbers using this patter
 ```bash
 ELEVENLABS_AGENT_ID_DEFAULT=your_default_agent_id \
 ELEVENLABS_API_KEY=your_api_key \
-PHONE_908503351053_AGENT_ID=customer_service_agent \
+PHONE_908502426449_AGENT_ID=customer_service_agent \
 PHONE_905551234567_AGENT_ID=sales_agent \
 MAIVO_API_URL=https://api.maivo.com.tr/api/temsilci/kayit \
 MAIVO_API_KEY=your_maivo_api_key \
@@ -63,7 +63,7 @@ ELEVENLABS_AGENT_ID_DEFAULT=your_default_agent_id_here
 ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
 
 # Dynamic Phone-to-Agent Mapping
-PHONE_908503351053_AGENT_ID=customer_service_agent_id
+PHONE_908502426449_AGENT_ID=customer_service_agent_id
 PHONE_905551234567_AGENT_ID=sales_agent_id
 PHONE_902125551234_AGENT_ID=technical_support_agent_id
 
@@ -106,7 +106,7 @@ The application now supports dynamic agent routing based on the called phone num
 3. **Fallback**: If no specific agent found, uses `ELEVENLABS_AGENT_ID_DEFAULT` or `ELEVENLABS_AGENT_ID`
 
 ### Routing Examples:
-- Call to `+90 850 335 10 53` → Uses `PHONE_908503351053_AGENT_ID` agent
+- Call to `+90 850 242 64 49` → Uses `PHONE_908502426449_AGENT_ID` agent
 - Call to `0555 123 45 67` → Uses `PHONE_905551234567_AGENT_ID` agent  
 - Call to unknown number → Uses default agent
 
