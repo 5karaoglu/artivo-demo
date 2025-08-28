@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: elevenlabs_s2s_app
+    container_name: artivo_demo_app
     ports:
       - "${WS_PORT_HOST:-3000}:${WS_PORT_CONTAINER:-3000}"
     volumes:
@@ -29,7 +29,7 @@ services:
 
   ngrok:
     image: ngrok/ngrok:latest
-    container_name: elevenlabs_s2s_ngrok
+    container_name: artivo_demo_ngrok
     restart: unless-stopped
     ports:
       - "4040:4040"
